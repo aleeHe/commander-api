@@ -38,6 +38,9 @@ namespace Commander
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen();
+
             services.AddScoped<ICommanderRepo, SqlCommanderRepo>();
         }
 
@@ -48,6 +51,13 @@ namespace Commander
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
 
             app.UseHttpsRedirection();
 
