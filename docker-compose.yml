@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  postgres-server:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: SA
+      POSTGRES_PASSWORD: p4SSw0rd
+      POSTGRES_DB: commanderDb
+    ports:
+      - "5432:5432"
+
+  commander-api:
+    build: .
+    environment:
+      CommanderDbConnectionString: "Host=postgres-server;Port=5432;Database=commanderDb;Username=SA;Password=p4SSw0rd"
+    ports:
+      - "8080:80"
