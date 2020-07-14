@@ -56,7 +56,7 @@ namespace Commander
                         Url = new Uri("https://twitter.com/aliiHeshmati"),
                     }
                 });
-                
+
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -67,12 +67,15 @@ namespace Commander
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CommanderContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // migrate database changes on startup (includes initial db creation)
+            context.Database.Migrate();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
